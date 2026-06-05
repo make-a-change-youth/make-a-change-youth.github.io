@@ -337,8 +337,22 @@ async function loadSignups() {
           <a href="mailto:${escapeHtml(s.email || '')}">${escapeHtml(s.email || '')}</a>
           ${s.message ? `<p>${escapeHtml(s.message)}</p>` : ''}
         </div>
-        <span class="signup-date">${escapeHtml(date)}</span>
+        <div class="signup-meta">
+          <span class="signup-date">${escapeHtml(date)}</span>
+          <button class="btn-icon btn-icon--danger signup-delete" title="Delete" aria-label="Delete signup">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+          </button>
+        </div>
       `;
+      item.querySelector('.signup-delete').addEventListener('click', async () => {
+        if (!confirm(`Delete signup from ${s.name || 'this person'}?`)) return;
+        try {
+          await deleteDoc(doc(db, 'signups', docSnap.id));
+          loadSignups();
+        } catch (err) {
+          alert('Error deleting: ' + err.message);
+        }
+      });
       container.appendChild(item);
     });
   } catch (err) {
