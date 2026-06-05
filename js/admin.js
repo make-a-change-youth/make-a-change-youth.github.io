@@ -181,14 +181,21 @@ async function loadPosts() {
 
     if (snap.empty) {
       container.innerHTML = '<div class="empty-state"><p>No blog posts yet. Click "New Blog Post" to create one.</p></div>';
+      const summary = document.getElementById('stats-summary');
+      if (summary) summary.innerHTML = '';
       return;
     }
 
     container.innerHTML = '';
+    let totalViews = 0, totalLikes = 0, totalComments = 0;
+
     snap.forEach(docSnap => {
       const post = docSnap.data();
       const date = post.createdAt?.toDate?.() ? post.createdAt.toDate().toLocaleDateString() : 'Draft';
       const statusClass = post.status === 'published' ? 'post-status--published' : 'post-status--draft';
+      totalViews += post.views || 0;
+      totalLikes += post.likes || 0;
+      totalComments += post.commentCount || 0;
 
       const item = document.createElement('div');
       item.className = 'post-list-item';
@@ -196,6 +203,11 @@ async function loadPosts() {
         <div class="post-list-info">
           <h3>${escapeHtml(post.title)}</h3>
           <span class="post-list-meta">${post.authorName} &middot; ${date} &middot; ${post.readTime} min read</span>
+        </div>
+        <div class="post-list-stats">
+          <span>${post.views || 0} views</span>
+          <span>${post.likes || 0} likes</span>
+          <span>${post.commentCount || 0} comments</span>
         </div>
         <span class="post-status ${statusClass}">${post.status}</span>
         <div class="post-list-actions">
@@ -208,6 +220,16 @@ async function loadPosts() {
       item.querySelector('.delete-btn').addEventListener('click', () => deletePost(docSnap.id, post.title));
       container.appendChild(item);
     });
+
+    const summary = document.getElementById('stats-summary');
+    if (summary) {
+      summary.innerHTML = `
+        <div class="stat-box"><strong>${snap.size}</strong><span>Posts</span></div>
+        <div class="stat-box"><strong>${totalViews}</strong><span>Views</span></div>
+        <div class="stat-box"><strong>${totalLikes}</strong><span>Likes</span></div>
+        <div class="stat-box"><strong>${totalComments}</strong><span>Comments</span></div>
+      `;
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading posts: ${err.message}</p></div>`;
   }

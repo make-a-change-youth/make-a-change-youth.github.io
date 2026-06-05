@@ -22,6 +22,13 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Allow anyone to bump ONLY the engagement counters (views/likes/commentCount),
+    // never a post's actual content.
+    function isCounterUpdate() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasOnly(['views', 'likes', 'commentCount']);
+    }
+
     // USERS: anyone can read, only the user or admin can write
     match /users/{userId} {
       allow read: if true;
@@ -33,7 +40,7 @@ service cloud.firestore {
     match /blogPosts/{postId} {
       allow read: if true;
       allow create: if isAuthorOrAdmin();
-      allow update: if isAuthorOrAdmin();
+      allow update: if isAuthorOrAdmin() || isCounterUpdate();
       allow delete: if isAdmin();
     }
 

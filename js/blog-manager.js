@@ -137,8 +137,13 @@ export async function loadSinglePost() {
       ? post.createdAt.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
       : '';
 
-    // Increment view count
-    updateDoc(doc(db, 'blogPosts', postId), { views: increment(1) }).catch(() => {});
+    // Count a view once per device (localStorage) — touches only the views counter
+    const viewedKey = `macy_viewed_${postId}`;
+    if (!localStorage.getItem(viewedKey)) {
+      updateDoc(doc(db, 'blogPosts', postId), { views: increment(1) })
+        .then(() => localStorage.setItem(viewedKey, '1'))
+        .catch(() => {});
+    }
 
     container.innerHTML = `
       <article class="blog-post">
@@ -154,6 +159,13 @@ export async function loadSinglePost() {
           <img src="${post.coverImage}" alt="${escapeHtml(post.title)}" width="800" height="400">
         </div>` : ''}
         <div class="blog-post-content">${post.content}</div>
+        <div class="blog-post-actions">
+          <button class="like-btn" id="like-btn" type="button" aria-pressed="false" aria-label="Like this post">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span class="like-count" id="like-count">${post.likes || 0}</span>
+          </button>
+          <span class="post-stat" id="view-stat">${post.views || 0} views</span>
+        </div>
         <a href="../blog.html" class="blog-post-back">&larr; Back to all posts</a>
       </article>
 
@@ -168,10 +180,50 @@ export async function loadSinglePost() {
     document.title = `${post.title} | MACY`;
     loadComments(postId, 'blog');
     setupCommentForm(postId, 'blog');
+    setupLikeButton(postId);
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading post.</p><a href="../blog.html" class="btn btn-outline">Back to Blog</a></div>`;
     console.error('Error loading post:', err);
   }
+}
+
+// Anonymous like toggle — one like per device, tracked in localStorage
+function setupLikeButton(postId) {
+  const btn = document.getElementById('like-btn');
+  const countEl = document.getElementById('like-count');
+  if (!btn || !countEl) return;
+
+  const likedKey = `macy_liked_${postId}`;
+  let liked = localStorage.getItem(likedKey) === '1';
+  setLikedState(btn, liked);
+
+  btn.addEventListener('click', async () => {
+    if (btn.disabled) return;
+    btn.disabled = true;
+
+    const delta = liked ? -1 : 1;
+    const current = parseInt(countEl.textContent, 10) || 0;
+    const next = Math.max(0, current + delta);
+    countEl.textContent = next; // optimistic update
+
+    try {
+      await updateDoc(doc(db, 'blogPosts', postId), { likes: increment(delta) });
+      liked = !liked;
+      if (liked) localStorage.setItem(likedKey, '1');
+      else localStorage.removeItem(likedKey);
+      setLikedState(btn, liked);
+    } catch (err) {
+      countEl.textContent = current; // revert on failure
+      console.error('Error updating like:', err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
+
+function setLikedState(btn, liked) {
+  btn.classList.toggle('liked', liked);
+  btn.setAttribute('aria-pressed', String(liked));
 }
 
 // ===== COMMENTS =====
