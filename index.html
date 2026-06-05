@@ -93,37 +93,8 @@
           </div>
           <a href="blog.html" class="btn btn-outline">View all stories</a>
         </div>
-        <div class="stories-cards">
-          <a href="blog/teens-step-in-action.html" class="story-card" data-reveal>
-            <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=500&h=334&fit=crop" alt="Youth speaking at community event" loading="lazy" width="500" height="334">
-            </div>
-            <div class="story-card-body">
-              <time>January 15, 2026</time>
-              <h3>Steps to Initiating Real Community Change</h3>
-              <span class="read-more">Read more</span>
-            </div>
-          </a>
-          <a href="blog/inspiring-youth-activism.html" class="story-card" data-reveal style="--reveal-delay:100ms">
-            <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=500&h=334&fit=crop" alt="Teen leader in classroom" loading="lazy" width="500" height="334">
-            </div>
-            <div class="story-card-body">
-              <time>February 02, 2026</time>
-              <h3>Understanding Your Power as a Teen Leader</h3>
-              <span class="read-more">Read more</span>
-            </div>
-          </a>
-          <a href="blog/empowering-teens-community.html" class="story-card" data-reveal style="--reveal-delay:200ms">
-            <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&h=334&fit=crop" alt="Youth volunteers working together" loading="lazy" width="500" height="334">
-            </div>
-            <div class="story-card-body">
-              <time>March 10, 2026</time>
-              <h3>Grassroots Organizing in the Digital Era</h3>
-              <span class="read-more">Read more</span>
-            </div>
-          </a>
+        <div class="stories-cards" id="latest-stories">
+          <p style="grid-column:1/-1;color:var(--ink-faint);font-family:var(--font-mono);font-size:.8rem;">Loading stories&hellip;</p>
         </div>
       </div>
     </section>
@@ -244,5 +215,6 @@
 
   <script src="js/main.js"></script>
   <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/blog-manager.js"></script>
 </body>
 </html>

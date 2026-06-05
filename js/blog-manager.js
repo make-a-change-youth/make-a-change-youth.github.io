@@ -1,7 +1,7 @@
 import { db, auth } from './firebase-config.js';
 import {
   collection, getDocs, getDoc, doc, updateDoc, addDoc, deleteDoc,
-  query, where, orderBy, increment, serverTimestamp
+  query, where, orderBy, limit, increment, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
 // Load all published blog posts for the listing page
@@ -39,16 +39,16 @@ export async function loadBlogPosts() {
         </div>
         <div class="blog-card-body">
           <div class="blog-card-meta">
-            <span class="blog-card-avatar">U</span>
+            <span class="blog-card-avatar">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
             <span>${escapeHtml(post.authorName)} &middot; ${date} &middot; ${post.readTime || 3} min read</span>
           </div>
           <h3>${escapeHtml(post.title)}</h3>
           <p class="blog-card-excerpt">${escapeHtml(post.excerpt || '')}</p>
         </div>
         <div class="blog-card-footer">
-          <span>&#128065; ${post.views || 0}</span>
-          <span>&#128172; ${post.commentCount || 0}</span>
-          <span>&#9829; ${post.likes || 0}</span>
+          <span>${post.views || 0} Views</span>
+          <span>${post.commentCount || 0} Comments</span>
+          <span>${post.likes || 0} Likes</span>
         </div>
       `;
       container.appendChild(card);
@@ -56,6 +56,54 @@ export async function loadBlogPosts() {
   } catch (err) {
     container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#c0392b;">Error loading posts. Please try again later.</div>`;
     console.error('Error loading blog posts:', err);
+  }
+}
+
+// Load the 3 newest published posts for the homepage "Latest stories" strip
+export async function loadLatestStories() {
+  const container = document.getElementById('latest-stories');
+  if (!container) return;
+
+  try {
+    const q = query(
+      collection(db, 'blogPosts'),
+      where('status', '==', 'published'),
+      orderBy('createdAt', 'desc'),
+      limit(3)
+    );
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      container.innerHTML = '<p style="grid-column:1/-1;color:var(--ink-faint);font-family:var(--font-mono);font-size:.8rem;">No stories yet.</p>';
+      return;
+    }
+
+    container.innerHTML = '';
+    snap.forEach(docSnap => {
+      const post = docSnap.data();
+      const date = post.createdAt?.toDate?.()
+        ? post.createdAt.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : '';
+
+      const card = document.createElement('a');
+      card.href = `blog/post.html?id=${docSnap.id}`;
+      card.className = 'story-card';
+      card.innerHTML = `
+        <div class="story-card-img">
+          <img src="${post.coverImage || 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=334&fit=crop'}"
+               alt="${escapeHtml(post.title)}" loading="lazy" width="500" height="334">
+        </div>
+        <div class="story-card-body">
+          <time>${date}</time>
+          <h3>${escapeHtml(post.title)}</h3>
+          <span class="read-more">Read more</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    container.innerHTML = '<p style="grid-column:1/-1;color:var(--ink-faint);font-family:var(--font-mono);font-size:.8rem;">Could not load stories.</p>';
+    console.error('Error loading latest stories:', err);
   }
 }
 
@@ -93,7 +141,7 @@ export async function loadSinglePost() {
         <div class="blog-post-header">
           <h1>${escapeHtml(post.title)}</h1>
           <div class="blog-post-byline">
-            <span class="blog-card-avatar">U</span>
+            <span class="blog-card-avatar">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
             <span>By <strong>${escapeHtml(post.authorName)}</strong> &middot; ${date} &middot; ${post.readTime || 3} min read</span>
           </div>
         </div>
@@ -237,4 +285,7 @@ if (document.getElementById('blog-grid')) {
 }
 if (document.getElementById('blog-post-dynamic')) {
   loadSinglePost();
+}
+if (document.getElementById('latest-stories')) {
+  loadLatestStories();
 }

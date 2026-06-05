@@ -207,8 +207,8 @@ async function loadGroupFeed() {
           </div>
           <div class="feed-post-body"><p>${escapeHtml(p.content)}</p></div>
           <div class="feed-actions">
-            <span>&#128172; ${p.commentCount || 0} Comments</span>
-            <span>&#128065; ${p.views || 0} Views</span>
+            <span>${p.commentCount || 0} Comments</span>
+            <span>${p.views || 0} Views</span>
           </div>
           <div class="feed-comment-box">
             <input type="text" class="feed-comment-input group-comment-input" placeholder="Write a comment..." data-post-id="${docSnap.id}" ${!auth.currentUser ? 'disabled' : ''}>
