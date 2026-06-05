@@ -5,7 +5,7 @@ import {
 
 // Set this after creating a free Formspree form (https://formspree.io) —
 // e.g. 'https://formspree.io/f/abcdwxyz'. Leave '' to save to Firestore only.
-const FORMSPREE_ENDPOINT = '';
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjyjvqa';
 
 const form = document.getElementById('getinvolved-form');
 if (form) {
