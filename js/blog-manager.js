@@ -4,6 +4,12 @@ import {
   query, where, orderBy, limit, increment, serverTimestamp, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
+// Listing-page state (kept in memory so search/tag filters don't re-query Firestore)
+let allPosts = [];
+let activeTag = '';
+let searchTerm = '';
+let blogControlsInit = false;
+
 // Load all published blog posts for the listing page
 export async function loadBlogPosts() {
   const container = document.getElementById('blog-grid');
@@ -24,40 +30,104 @@ export async function loadBlogPosts() {
       return;
     }
 
-    container.innerHTML = '';
-    snap.forEach(docSnap => {
-      const post = docSnap.data();
-      const date = post.createdAt?.toDate?.()
-        ? post.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-        : '';
-
-      const card = document.createElement('a');
-      card.href = `blog/post.html?id=${docSnap.id}`;
-      card.className = 'blog-card';
-      card.innerHTML = `
-        <div class="blog-card-image">
-          <img src="${post.coverImage || 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop'}"
-               alt="${escapeHtml(post.title)}" loading="lazy" width="400" height="250">
-        </div>
-        <div class="blog-card-body">
-          <div class="blog-card-meta">
-            <span class="blog-card-avatar" aria-hidden="true">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
-            <span>${escapeHtml(post.authorName)} &middot; ${date} &middot; ${post.readTime || 3} min read</span>
-          </div>
-          <h3>${escapeHtml(post.title)}</h3>
-          <p class="blog-card-excerpt">${escapeHtml(post.excerpt || '')}</p>
-        </div>
-        <div class="blog-card-footer">
-          <span>${post.views || 0} Views</span>
-          <span>${post.commentCount || 0} Comments</span>
-          <span>${post.likes || 0} Likes</span>
-        </div>
-      `;
-      container.appendChild(card);
-    });
+    allPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    buildTagBar();
+    setupBlogControls();
+    renderPosts();
   } catch (err) {
     container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#c0392b;">Error loading posts. Please try again later.</div>`;
     console.error('Error loading blog posts:', err);
+  }
+}
+
+// Render only the cards matching the current search term + active tag
+function renderPosts() {
+  const container = document.getElementById('blog-grid');
+  if (!container) return;
+
+  const term = searchTerm.toLowerCase();
+  const filtered = allPosts.filter(p => {
+    if (activeTag && !(p.tags || []).includes(activeTag)) return false;
+    if (!term) return true;
+    const hay = `${p.title} ${p.excerpt || ''} ${(p.tags || []).join(' ')}`.toLowerCase();
+    return hay.includes(term);
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#555;">No stories match your search.</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  filtered.forEach(post => container.appendChild(renderCard(post)));
+}
+
+function renderCard(post) {
+  const date = post.createdAt?.toDate?.()
+    ? post.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    : '';
+  const tags = (post.tags || []).slice(0, 3)
+    .map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('');
+
+  const card = document.createElement('a');
+  card.href = `blog/post.html?id=${post.id}`;
+  card.className = 'blog-card';
+  card.innerHTML = `
+    <div class="blog-card-image">
+      <img src="${post.coverImage || 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop'}"
+           alt="${escapeHtml(post.title)}" loading="lazy" width="400" height="250">
+    </div>
+    <div class="blog-card-body">
+      <div class="blog-card-meta">
+        <span class="blog-card-avatar" aria-hidden="true">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
+        <span>${escapeHtml(post.authorName)} &middot; ${date} &middot; ${post.readTime || 3} min read</span>
+      </div>
+      <h3>${escapeHtml(post.title)}</h3>
+      <p class="blog-card-excerpt">${escapeHtml(post.excerpt || '')}</p>
+      ${tags ? `<div class="card-tags">${tags}</div>` : ''}
+    </div>
+    <div class="blog-card-footer">
+      <span>${post.views || 0} Views</span>
+      <span>${post.commentCount || 0} Comments</span>
+      <span>${post.likes || 0} Likes</span>
+    </div>
+  `;
+  return card;
+}
+
+// Build the tag filter bar from tags present across the loaded posts
+function buildTagBar() {
+  const bar = document.getElementById('blog-tags');
+  if (!bar) return;
+
+  const tagSet = new Set();
+  allPosts.forEach(p => (p.tags || []).forEach(t => tagSet.add(t)));
+  const tags = [...tagSet].sort((a, b) => a.localeCompare(b));
+
+  let html = `<button class="blog-tag${activeTag === '' ? ' active' : ''}" data-tag="">All Posts</button>`;
+  tags.forEach(t => {
+    html += `<button class="blog-tag${activeTag === t ? ' active' : ''}" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</button>`;
+  });
+  bar.innerHTML = html;
+
+  bar.querySelectorAll('.blog-tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag;
+      bar.querySelectorAll('.blog-tag').forEach(b => b.classList.toggle('active', b === btn));
+      renderPosts();
+    });
+  });
+}
+
+function setupBlogControls() {
+  if (blogControlsInit) return;
+  blogControlsInit = true;
+  const input = document.getElementById('blog-search-input');
+  if (input) {
+    input.addEventListener('input', () => {
+      searchTerm = input.value.trim();
+      renderPosts();
+    });
   }
 }
 
@@ -165,6 +235,13 @@ export async function loadSinglePost() {
             <span class="like-count" id="like-count">${post.likes || 0}</span>
           </button>
           <span class="post-stat" id="view-stat">${post.views || 0} views</span>
+          <div class="post-share">
+            <span class="post-share-label">Share</span>
+            <a class="share-link" id="share-x" target="_blank" rel="noopener">X</a>
+            <a class="share-link" id="share-fb" target="_blank" rel="noopener">Facebook</a>
+            <a class="share-link" id="share-wa" target="_blank" rel="noopener">WhatsApp</a>
+            <button class="share-link" id="share-copy" type="button">Copy link</button>
+          </div>
         </div>
         <a href="../blog.html" class="blog-post-back">&larr; Back to all posts</a>
       </article>
@@ -177,10 +254,11 @@ export async function loadSinglePost() {
       </section>
     `;
 
-    document.title = `${post.title} | MACY`;
+    setMeta(post);
     loadComments(postId, 'blog');
     setupCommentForm(postId, 'blog');
     setupLikeButton(postId);
+    setupShare(post.title);
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading post.</p><a href="../blog.html" class="btn btn-outline">Back to Blog</a></div>`;
     console.error('Error loading post:', err);
@@ -224,6 +302,51 @@ function setupLikeButton(postId) {
 function setLikedState(btn, liked) {
   btn.classList.toggle('liked', liked);
   btn.setAttribute('aria-pressed', String(liked));
+}
+
+// Update document title + social meta tags to the current post
+// (helps the browser tab and JS-aware crawlers; classic social scrapers see the static defaults)
+function setMeta(post) {
+  document.title = `${post.title} | MACY`;
+  const url = window.location.href;
+  const desc = (post.excerpt || '').trim() || 'A story from Make A Change Youth.';
+  const set = (sel, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute('content', val); };
+  set('meta[name="description"]', desc);
+  set('meta[property="og:title"]', post.title);
+  set('meta[property="og:description"]', desc);
+  set('meta[property="og:url"]', url);
+  set('meta[name="twitter:title"]', post.title);
+  set('meta[name="twitter:description"]', desc);
+  if (post.coverImage) {
+    set('meta[property="og:image"]', post.coverImage);
+    set('meta[name="twitter:image"]', post.coverImage);
+  }
+}
+
+// Wire the share links/buttons to the current post URL + title
+function setupShare(title) {
+  const url = window.location.href;
+  const t = encodeURIComponent(title);
+  const u = encodeURIComponent(url);
+  const x = document.getElementById('share-x');
+  const fb = document.getElementById('share-fb');
+  const wa = document.getElementById('share-wa');
+  const copy = document.getElementById('share-copy');
+  if (x) x.href = `https://twitter.com/intent/tweet?text=${t}&url=${u}`;
+  if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${u}`;
+  if (wa) wa.href = `https://wa.me/?text=${t}%20${u}`;
+  if (copy) {
+    copy.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        const orig = copy.textContent;
+        copy.textContent = 'Copied!';
+        setTimeout(() => { copy.textContent = orig; }, 1500);
+      } catch (err) {
+        console.warn('Clipboard failed:', err);
+      }
+    });
+  }
 }
 
 // ===== COMMENTS =====

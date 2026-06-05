@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>Blog | MACY</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Make A Change Youth">
+  <meta property="og:title" content="The MACY Blog — Stories &amp; Resources">
+  <meta property="og:description" content="Read the latest stories from Make A Change Youth — empowering narratives and resources designed to spark positive change.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1200&h=630&fit=crop">
+  <meta property="og:url" content="https://make-a-change-youth.github.io/blog.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The MACY Blog — Stories &amp; Resources">
+  <meta name="twitter:description" content="Read the latest stories from Make A Change Youth — empowering narratives and resources designed to spark positive change.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1200&h=630&fit=crop">
   <meta name="description" content="Read the latest stories from Make A Change Youth — empowering narratives and resources designed to spark positive change.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +55,13 @@
 
   <main class="blog-page">
     <div class="container">
-      <div class="blog-filter">
-        <span>All Posts</span>
+      <div class="blog-toolbar">
+        <div class="blog-tags" id="blog-tags">
+          <button class="blog-tag active" data-tag="">All Posts</button>
+        </div>
+        <div class="blog-search">
+          <input type="search" id="blog-search-input" placeholder="Search stories&hellip;" aria-label="Search stories">
+        </div>
       </div>
 
       <!-- Posts are loaded from Firestore by js/blog-manager.js -->

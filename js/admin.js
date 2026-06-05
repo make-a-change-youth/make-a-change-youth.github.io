@@ -112,6 +112,7 @@ function clearEditor() {
   document.getElementById('post-title').value = '';
   document.getElementById('post-cover').value = '';
   document.getElementById('post-excerpt').value = '';
+  document.getElementById('post-tags').value = '';
   quill.setContents([]);
 }
 
@@ -136,6 +137,8 @@ async function savePost(status) {
   const content = quill.root.innerHTML;
   const excerpt = document.getElementById('post-excerpt').value.trim();
   const coverImage = document.getElementById('post-cover').value.trim();
+  const tagsRaw = document.getElementById('post-tags').value.trim();
+  const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
   const editId = document.getElementById('edit-post-id').value;
   const user = auth.currentUser;
 
@@ -145,6 +148,7 @@ async function savePost(status) {
     content,
     excerpt: excerpt || content.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
     coverImage: coverImage || '',
+    tags,
     authorId: user.uid,
     authorName: user.displayName || user.email.split('@')[0],
     status,
@@ -240,6 +244,7 @@ function editPost(id, post) {
   document.getElementById('post-title').value = post.title;
   document.getElementById('post-cover').value = post.coverImage || '';
   document.getElementById('post-excerpt').value = post.excerpt || '';
+  document.getElementById('post-tags').value = (post.tags || []).join(', ');
   quill.root.innerHTML = post.content || '';
 
   document.getElementById('editor-section').style.display = '';
