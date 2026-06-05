@@ -417,6 +417,259 @@
   border-color: var(--forest);
 }
 
+/* ===== Groups v2: clickable groups, header, likes, comments ===== */
+.sidebar-all {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 0.6rem 0.4rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.sidebar-all:hover,
+.sidebar-all.active {
+  color: var(--forest);
+}
+
+.sidebar-group {
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  transition: background 0.2s ease;
+}
+
+.sidebar-group:hover {
+  background: var(--cream-deep);
+}
+
+.sidebar-group.active {
+  background: var(--mint);
+}
+
+/* Group header (shown when a group is selected) */
+.group-header {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.group-back {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 0.85rem;
+}
+
+.group-back:hover {
+  color: var(--forest-deep);
+}
+
+.group-header-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.group-header-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--mint);
+}
+
+.group-header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.group-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.group-header-info h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.group-header-count {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.group-header-info p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.group-header-join {
+  align-self: center;
+}
+
+/* Composer */
+.composer-top {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.composer-top textarea {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  outline: none;
+  resize: vertical;
+  min-height: 52px;
+  transition: border-color 0.2s ease;
+}
+
+.composer-top textarea:focus {
+  border-color: var(--forest);
+}
+
+.composer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.composer-actions select {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+}
+
+/* Delete own post */
+.feed-post-delete {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.feed-post-delete:hover {
+  color: #c0392b;
+  border-color: #e2b6b1;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+/* Action buttons (like / comments toggle) */
+.feed-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.2s ease;
+}
+
+.feed-action:hover {
+  color: var(--forest);
+}
+
+.feed-action svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: fill 0.2s ease, transform 0.2s var(--ease);
+}
+
+.like-action.liked {
+  color: #c0392b;
+}
+
+.like-action.liked svg {
+  fill: #c0392b;
+  stroke: #c0392b;
+  transform: scale(1.1);
+}
+
+.feed-actions .feed-views,
+.feed-actions .feed-views:hover {
+  cursor: default;
+  color: var(--ink-faint);
+}
+
+/* Collapsible comments */
+.feed-comments-list {
+  margin-bottom: var(--space-sm);
+}
+
+.feed-comment-content p {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.feed-comments-note,
+.feed-comment-login {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.feed-comment-login {
+  margin-top: 0.5rem;
+}
+
 /* ===== Notifications / Activity feed ===== */
 .notifications-page {
   padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(4rem, 9vw, 7rem);
