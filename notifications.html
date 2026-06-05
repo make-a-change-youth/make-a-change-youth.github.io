@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>Notifications | MACY</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +37,10 @@
     <div class="container">
       <span class="eyebrow" style="justify-content:center;margin-bottom:1.25rem;">Stay in the loop</span>
       <h1>Notifications</h1>
-      <p>No new notifications at this time. Check back later for updates from your groups and the movement.</p>
+      <p class="notifications-sub">The latest stories, comments, and group activity from across Make A Change Youth.</p>
+      <div class="activity-feed" id="activity-feed">
+        <p class="activity-empty">Loading activity&hellip;</p>
+      </div>
     </div>
   </main>
 
@@ -62,5 +66,6 @@
 
   <script src="js/main.js"></script>
   <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/notifications-manager.js"></script>
 </body>
 </html>

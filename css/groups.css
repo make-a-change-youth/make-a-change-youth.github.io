@@ -417,30 +417,90 @@
   border-color: var(--forest);
 }
 
-/* ===== Notifications ===== */
+/* ===== Notifications / Activity feed ===== */
 .notifications-page {
-  padding: clamp(4rem, 10vw, 8rem) 0;
+  padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(4rem, 9vw, 7rem);
   background: var(--cream);
   min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .notifications-page .container {
-  text-align: center;
-  max-width: 34rem;
+  max-width: 720px;
 }
 
 .notifications-page h1 {
   font-size: clamp(2.4rem, 6vw, 4rem);
   color: var(--ink);
+  text-align: center;
   margin-bottom: var(--space-sm);
 }
 
-.notifications-page p {
+.notifications-sub {
   color: var(--ink-soft);
   font-size: 1.05rem;
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.activity-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s var(--ease);
+}
+
+a.activity-item:hover {
+  border-color: var(--forest);
+  transform: translateX(3px);
+}
+
+.activity-tag {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.6rem;
+  border-radius: 50px;
+}
+
+.activity-tag--post { background: var(--forest); color: var(--cream); }
+.activity-tag--comment { background: var(--mint); color: var(--forest-deep); }
+.activity-tag--group { background: var(--lime); color: var(--forest-deep); }
+
+.activity-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.activity-time {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+
+.activity-empty {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  padding: var(--space-lg) 0;
 }
 
 /* ===== Responsive ===== */
