@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groups | MACY</title>
+  <meta name="description" content="Join groups and connect with fellow youth changemakers at Make A Change Youth.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/groups.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">
+        <span class="logo-name">MACY</span>
+        <span class="logo-tagline">Make A Change Youth</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="groups.html" class="active">Groups</a></li>
+        <li><a href="notifications.html">Notifications</a></li>
+      </ul>
+      <a href="index.html#cta" class="btn btn-primary nav-cta">TAKE ACTION</a>
+    </nav>
+  </header>
+
+  <main class="groups-page">
+    <div class="container">
+      <div class="groups-header">
+        <h1>Groups Feed</h1>
+        <p>View groups and posts below.</p>
+      </div>
+
+      <div class="groups-layout">
+        <!-- FEED (dynamic) -->
+        <div class="groups-feed" id="groups-feed-dynamic">
+          <div style="text-align:center;padding:2rem;color:#555;">Loading posts...</div>
+        </div>
+
+        <!-- SIDEBAR (dynamic) -->
+        <aside class="groups-sidebar" id="groups-sidebar-dynamic">
+          <div style="padding:1rem;color:#555;">Loading groups...</div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo">
+          <span class="logo-name">MACY</span>
+          <span class="logo-tagline">Make A Change Youth</span>
+        </a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-content">
+        <div class="footer-left"><p>&copy; 2026 Make A Change Youth</p></div>
+        <div class="footer-center"><p><a href="mailto:unitedyouth26@gmail.com">unitedyouth26@gmail.com</a></p></div>
+        <div class="footer-right">
+          <p>Make A Change Youth (M.A.C.Y) is all about helping young people lead real change in their communities.</p>
+          <p>Founder &amp; Editor in Chief: Sriram Palaniappan</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/groups-manager.js"></script>
+</body>
+</html>

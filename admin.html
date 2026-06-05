@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | MACY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">
+        <span class="logo-name">MACY</span>
+        <span class="logo-tagline">Make A Change Youth</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="groups.html">Groups</a></li>
+        <li><a href="notifications.html">Notifications</a></li>
+      </ul>
+      <a href="index.html#cta" class="btn btn-primary nav-cta">TAKE ACTION</a>
+    </nav>
+  </header>
+
+  <main class="admin-page">
+    <div class="container">
+
+      <!-- Loading / Access Denied states -->
+      <div id="admin-loading" class="admin-loading">
+        <p>Loading dashboard...</p>
+      </div>
+
+      <div id="admin-denied" style="display:none;" class="empty-state">
+        <p>You don't have permission to access this page.</p>
+        <a href="index.html" class="btn btn-outline">Go Home</a>
+      </div>
+
+      <!-- Dashboard (hidden until auth verified) -->
+      <div id="admin-dashboard" style="display:none;">
+        <div class="admin-header">
+          <h1>Dashboard</h1>
+          <button class="btn btn-primary" id="new-post-btn">New Blog Post</button>
+        </div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-panel="posts">Blog Posts</button>
+          <button class="admin-tab" data-panel="users" id="users-tab">Users</button>
+        </div>
+
+        <!-- BLOG POSTS PANEL -->
+        <div class="admin-panel active" id="panel-posts">
+
+          <!-- Editor (hidden by default) -->
+          <div id="editor-section" style="display:none;">
+            <div class="editor-form">
+              <input type="hidden" id="edit-post-id">
+              <div class="editor-field">
+                <label for="post-title">Title</label>
+                <input type="text" id="post-title" placeholder="Your blog post title" required>
+              </div>
+              <div class="editor-field">
+                <label for="post-cover">Cover Image URL</label>
+                <input type="text" id="post-cover" placeholder="https://images.unsplash.com/...">
+              </div>
+              <div class="editor-field">
+                <label for="post-excerpt">Excerpt</label>
+                <textarea id="post-excerpt" placeholder="Brief summary of the post..." rows="2"></textarea>
+              </div>
+              <div class="editor-field">
+                <label>Content</label>
+                <div id="quill-editor"></div>
+              </div>
+              <div class="editor-actions">
+                <button class="btn btn-primary" id="save-published">Publish</button>
+                <button class="btn btn-outline" id="save-draft">Save as Draft</button>
+                <button class="btn btn-outline" id="cancel-edit">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post List -->
+          <div id="post-list-section">
+            <div id="post-list" class="post-list">
+              <div class="admin-loading"><p>Loading posts...</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- USERS PANEL (admin only) -->
+        <div class="admin-panel" id="panel-users">
+          <div id="user-list" class="user-list">
+            <div class="admin-loading"><p>Loading users...</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo">
+          <span class="logo-name">MACY</span>
+          <span class="logo-tagline">Make A Change Youth</span>
+        </a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-content">
+        <div class="footer-left"><p>&copy; 2026 Make A Change Youth</p></div>
+        <div class="footer-center"><p><a href="mailto:unitedyouth26@gmail.com">unitedyouth26@gmail.com</a></p></div>
+        <div class="footer-right">
+          <p>Make A Change Youth (M.A.C.Y) is all about helping young people lead real change in their communities.</p>
+          <p>Founder &amp; Editor in Chief: Sriram Palaniappan</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
