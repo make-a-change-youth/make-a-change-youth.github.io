@@ -1,13 +1,15 @@
 import { db, auth } from './firebase-config.js';
 import {
   collection, getDocs, getDoc, doc, updateDoc, addDoc, deleteDoc,
-  query, where, orderBy, limit, increment, serverTimestamp
+  query, where, orderBy, limit, increment, serverTimestamp, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
 // Load all published blog posts for the listing page
 export async function loadBlogPosts() {
   const container = document.getElementById('blog-grid');
   if (!container) return;
+
+  container.innerHTML = skeletonCards(6);
 
   try {
     const q = query(
@@ -39,7 +41,7 @@ export async function loadBlogPosts() {
         </div>
         <div class="blog-card-body">
           <div class="blog-card-meta">
-            <span class="blog-card-avatar">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
+            <span class="blog-card-avatar" aria-hidden="true">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
             <span>${escapeHtml(post.authorName)} &middot; ${date} &middot; ${post.readTime || 3} min read</span>
           </div>
           <h3>${escapeHtml(post.title)}</h3>
@@ -63,6 +65,8 @@ export async function loadBlogPosts() {
 export async function loadLatestStories() {
   const container = document.getElementById('latest-stories');
   if (!container) return;
+
+  container.innerHTML = skeletonCards(3);
 
   try {
     const q = query(
@@ -141,7 +145,7 @@ export async function loadSinglePost() {
         <div class="blog-post-header">
           <h1>${escapeHtml(post.title)}</h1>
           <div class="blog-post-byline">
-            <span class="blog-card-avatar">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
+            <span class="blog-card-avatar" aria-hidden="true">${escapeHtml((post.authorName || 'U').charAt(0).toUpperCase())}</span>
             <span>By <strong>${escapeHtml(post.authorName)}</strong> &middot; ${date} &middot; ${post.readTime || 3} min read</span>
           </div>
         </div>
@@ -199,7 +203,7 @@ async function loadComments(parentId, parentType) {
       const el = document.createElement('div');
       el.className = 'comment-item';
       el.innerHTML = `
-        <div class="comment-avatar">${(c.authorName || 'U')[0].toUpperCase()}</div>
+        <div class="comment-avatar" aria-hidden="true">${(c.authorName || 'U')[0].toUpperCase()}</div>
         <div class="comment-body">
           <div class="comment-meta"><strong>${escapeHtml(c.authorName)}</strong> <span>&middot; ${date}</span></div>
           <p>${escapeHtml(c.content)}</p>
@@ -273,6 +277,51 @@ function renderCommentForm(area, parentId, parentType, user, userData) {
   });
 }
 
+// Render N shimmer placeholder cards while real content loads
+function skeletonCards(count) {
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    html += `
+      <div class="skeleton-card" aria-hidden="true">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton-body">
+          <div class="skeleton skeleton-line short"></div>
+          <div class="skeleton skeleton-line title"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line"></div>
+        </div>
+      </div>`;
+  }
+  return html;
+}
+
+// Count published posts and groups for the homepage hero stats
+export async function loadHomeStats() {
+  const storiesEl = document.getElementById('stat-stories');
+  const groupsEl = document.getElementById('stat-groups');
+  if (!storiesEl && !groupsEl) return;
+
+  if (storiesEl) {
+    try {
+      const c = await getCountFromServer(
+        query(collection(db, 'blogPosts'), where('status', '==', 'published'))
+      );
+      storiesEl.textContent = c.data().count;
+    } catch (err) {
+      console.error('Error counting stories:', err);
+    }
+  }
+
+  if (groupsEl) {
+    try {
+      const c = await getCountFromServer(collection(db, 'groups'));
+      groupsEl.textContent = c.data().count;
+    } catch (err) {
+      console.error('Error counting groups:', err);
+    }
+  }
+}
+
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text || '';
@@ -288,4 +337,7 @@ if (document.getElementById('blog-post-dynamic')) {
 }
 if (document.getElementById('latest-stories')) {
   loadLatestStories();
+}
+if (document.getElementById('stat-stories') || document.getElementById('stat-groups')) {
+  loadHomeStats();
 }

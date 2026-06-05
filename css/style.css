@@ -184,6 +184,55 @@ h6 {
   transform: none;
 }
 
+/* Skeleton loading placeholders */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(53, 71, 51, 0.09);
+  border-radius: var(--radius-sm);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+  to { transform: translateX(100%); }
+}
+.skeleton-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.skeleton-card .skeleton-img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 0;
+}
+.skeleton-card .skeleton-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.skeleton-line {
+  height: 0.8rem;
+}
+.skeleton-line.title {
+  height: 1.15rem;
+  width: 75%;
+}
+.skeleton-line.short {
+  width: 40%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+}
+
 /* =================================================================
    Buttons
    ================================================================= */

@@ -169,7 +169,7 @@ async function loadGroupFeed() {
         <div class="feed-post feed-new-post">
           <form id="new-group-post-form">
             <div class="feed-author" style="margin-bottom:0.75rem;">
-              <div class="feed-avatar">${(auth.currentUser.displayName || 'U')[0].toUpperCase()}</div>
+              <div class="feed-avatar" aria-hidden="true">${(auth.currentUser.displayName || 'U')[0].toUpperCase()}</div>
               <div class="feed-author-info"><strong>${escapeHtml(auth.currentUser.displayName || auth.currentUser.email)}</strong></div>
             </div>
             <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;">
@@ -199,7 +199,7 @@ async function loadGroupFeed() {
       html += `
         <div class="feed-post">
           <div class="feed-author">
-            <div class="feed-avatar">${(p.authorName || 'U')[0].toUpperCase()}</div>
+            <div class="feed-avatar" aria-hidden="true">${(p.authorName || 'U')[0].toUpperCase()}</div>
             <div class="feed-author-info">
               <strong>${escapeHtml(p.authorName)}</strong><br>
               <span>${date}${p.groupName ? ' &middot; posted in ' + escapeHtml(p.groupName) : ''}</span>
