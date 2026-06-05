@@ -29,6 +29,14 @@ service cloud.firestore {
         .hasOnly(['views', 'likes', 'commentCount']);
     }
 
+    // Validate a public "get involved" submission (write-only for the public)
+    function isValidSignup() {
+      return request.resource.data.keys().hasOnly(['name', 'email', 'message', 'createdAt', 'userAgent'])
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() < 200
+        && request.resource.data.email is string && request.resource.data.email.size() > 0 && request.resource.data.email.size() < 200
+        && request.resource.data.message is string && request.resource.data.message.size() < 5000;
+    }
+
     // USERS: anyone can read, only the user or admin can write
     match /users/{userId} {
       allow read: if true;
@@ -66,6 +74,12 @@ service cloud.firestore {
       allow create: if isLoggedIn();
       allow update: if isLoggedIn() && resource.data.authorId == request.auth.uid;
       allow delete: if isLoggedIn() && (resource.data.authorId == request.auth.uid || isAdmin());
+    }
+
+    // SIGNUPS: anyone can submit the get-involved form; only admins can read/manage
+    match /signups/{id} {
+      allow create: if isValidSignup();
+      allow read, update, delete: if isAdmin();
     }
   }
 }

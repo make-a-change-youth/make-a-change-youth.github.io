@@ -43,6 +43,7 @@ onAuthStateChanged(auth, async (user) => {
   // Hide users tab for non-admins
   if (currentRole !== 'admin') {
     document.getElementById('users-tab').style.display = 'none';
+    document.getElementById('signups-tab').style.display = 'none';
   }
 
   initQuill();
@@ -79,6 +80,9 @@ function setupTabs() {
 
       if (tab.dataset.panel === 'users' && currentRole === 'admin') {
         loadUsers();
+      }
+      if (tab.dataset.panel === 'signups' && currentRole === 'admin') {
+        loadSignups();
       }
     });
   });
@@ -303,6 +307,42 @@ async function loadUsers() {
     });
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading users: ${err.message}</p></div>`;
+  }
+}
+
+// ===== GET-INVOLVED SIGNUPS =====
+async function loadSignups() {
+  const container = document.getElementById('signups-list');
+  container.innerHTML = '<div class="admin-loading"><p>Loading signups...</p></div>';
+
+  try {
+    const q = query(collection(db, 'signups'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      container.innerHTML = '<div class="empty-state"><p>No signups yet. Submissions from the homepage "Get involved" form will appear here.</p></div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    snap.forEach(docSnap => {
+      const s = docSnap.data();
+      const date = s.createdAt?.toDate?.() ? s.createdAt.toDate().toLocaleString() : '';
+
+      const item = document.createElement('div');
+      item.className = 'signup-item';
+      item.innerHTML = `
+        <div class="signup-info">
+          <h4>${escapeHtml(s.name || 'Someone')}</h4>
+          <a href="mailto:${escapeHtml(s.email || '')}">${escapeHtml(s.email || '')}</a>
+          ${s.message ? `<p>${escapeHtml(s.message)}</p>` : ''}
+        </div>
+        <span class="signup-date">${escapeHtml(date)}</span>
+      `;
+      container.appendChild(item);
+    });
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state"><p>Error loading signups: ${err.message}</p></div>`;
   }
 }
 

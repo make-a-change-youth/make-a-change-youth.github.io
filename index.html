@@ -155,8 +155,16 @@
       <div class="cta-inner container" data-reveal>
         <span class="section-label">Join Us</span>
         <h2 class="cta-heading">Ready to lead <em>the change?</em></h2>
-        <p>The power of transformation lies in our collective action. Discover resources, connect with fellow activists, and find your unique way to impact your community.</p>
-        <a href="groups.html" class="btn">Join the movement</a>
+        <p>The power of transformation lies in our collective action. Tell us how you&rsquo;d like to get involved &mdash; we&rsquo;ll be in touch.</p>
+        <form class="getinvolved-form" id="getinvolved-form">
+          <div class="gi-row">
+            <input type="text" id="gi-name" placeholder="Your name" autocomplete="name" required>
+            <input type="email" id="gi-email" placeholder="Email address" autocomplete="email" required>
+          </div>
+          <textarea id="gi-message" placeholder="How would you like to get involved? (optional)" rows="3"></textarea>
+          <button type="submit" class="btn" id="gi-submit">Get involved</button>
+          <p class="gi-status" id="gi-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
 
@@ -227,5 +235,6 @@
   <script src="js/main.js"></script>
   <script type="module" src="js/auth.js"></script>
   <script type="module" src="js/blog-manager.js"></script>
+  <script type="module" src="js/getinvolved.js"></script>
 </body>
 </html>

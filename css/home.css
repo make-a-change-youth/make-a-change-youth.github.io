@@ -518,6 +518,68 @@
   --btn-fg: var(--cream);
 }
 
+/* ===== GET-INVOLVED FORM ===== */
+.getinvolved-form {
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.gi-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.gi-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.getinvolved-form input,
+.getinvolved-form textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid rgba(30, 42, 28, 0.25);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.getinvolved-form textarea {
+  margin-bottom: 0.75rem;
+  resize: vertical;
+  min-height: 84px;
+}
+
+.getinvolved-form input:focus,
+.getinvolved-form textarea:focus {
+  border-color: var(--forest-deep);
+}
+
+.getinvolved-form .btn {
+  width: 100%;
+}
+
+.gi-status {
+  margin: 0.9rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  min-height: 1.2em;
+  text-align: center;
+}
+
+.gi-status--ok { color: var(--forest-deep); }
+.gi-status--err { color: #7a1f17; }
+
+@media (max-width: 520px) {
+  .gi-row { flex-direction: column; }
+}
+
 /* ===== IMPACT GALLERY ============================================ */
 .impact {
   padding: clamp(4rem, 9vw, 7rem) 0;

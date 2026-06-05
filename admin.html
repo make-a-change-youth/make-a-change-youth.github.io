@@ -56,6 +56,7 @@
 
         <div class="admin-tabs">
           <button class="admin-tab active" data-panel="posts">Blog Posts</button>
+          <button class="admin-tab" data-panel="signups" id="signups-tab">Signups</button>
           <button class="admin-tab" data-panel="users" id="users-tab">Users</button>
         </div>
 
@@ -100,6 +101,13 @@
             <div id="post-list" class="post-list">
               <div class="admin-loading"><p>Loading posts...</p></div>
             </div>
+          </div>
+        </div>
+
+        <!-- SIGNUPS PANEL (admin only) -->
+        <div class="admin-panel" id="panel-signups">
+          <div id="signups-list" class="signups-list">
+            <div class="admin-loading"><p>Loading signups...</p></div>
           </div>
         </div>
 

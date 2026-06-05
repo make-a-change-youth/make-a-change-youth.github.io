@@ -304,6 +304,59 @@
   font-family: var(--font-sans);
 }
 
+/* ===== SIGNUPS ===== */
+.signups-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.signup-item {
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.signup-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.signup-info h4 {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.signup-info a {
+  font-size: 0.82rem;
+  color: var(--color-forest);
+  word-break: break-all;
+}
+
+.signup-info p {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  margin-top: 0.4rem;
+  line-height: 1.45;
+}
+
+.signup-date {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .signup-item { flex-direction: column; }
+}
+
 /* ===== EMPTY STATE ===== */
 .empty-state {
   text-align: center;
