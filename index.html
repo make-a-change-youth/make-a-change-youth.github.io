@@ -7,7 +7,7 @@
   <meta name="description" content="Empowering the next generation of activists with the resources and community to drive positive social impact and community leadership.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700;1,800;1,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/home.css">
@@ -38,61 +38,91 @@
 
     <!-- HERO -->
     <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <span class="hero-mark" aria-hidden="true">&#10033;</span>
       <div class="hero-inner container">
-        <h1 class="hero-heading">IGNITE CHANGE.<br>INSPIRE YOUTH.<br>LEAD ACTION.</h1>
-        <p class="hero-sub">Empowering the next generation of activists with the resources and community to drive positive social impact and community leadership.</p>
+        <div class="hero-content">
+          <p class="hero-kicker" data-reveal>Youth-led &middot; Est. 2026</p>
+          <h1 class="hero-heading" data-reveal style="--reveal-delay:80ms">IGNITE CHANGE.<br>INSPIRE YOUTH.<br><em>Lead action.</em></h1>
+          <p class="hero-sub" data-reveal style="--reveal-delay:160ms">Empowering the next generation of activists with the resources and community to drive positive social impact and community leadership.</p>
+          <div class="hero-actions" data-reveal style="--reveal-delay:240ms">
+            <a href="#cta" class="btn btn-gold">Become a changemaker</a>
+            <a href="blog.html" class="btn btn-ghost-light">Read the stories</a>
+          </div>
+          <ul class="hero-stats" data-reveal style="--reveal-delay:320ms">
+            <li><strong>8</strong><span>Stories told</span></li>
+            <li><strong>4</strong><span>Active groups</span></li>
+            <li><strong>&#8734;</strong><span>Potential</span></li>
+          </ul>
+        </div>
+        <div class="hero-media" data-reveal style="--reveal-delay:200ms">
+          <div class="hero-media-frame">
+            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=750&fit=crop" alt="Young changemakers gathered together outdoors" width="600" height="750">
+          </div>
+          <span class="hero-media-tag">On the ground</span>
+          <span class="hero-media-badge">Lead<br>today &middot;<br>not<br>tomorrow</span>
+        </div>
       </div>
     </section>
 
     <!-- OUR JOURNEY -->
     <section class="journey">
       <div class="journey-inner container">
-        <div class="journey-text">
+        <div class="journey-text" data-reveal>
           <span class="section-label">Our Journey</span>
-          <h2 class="journey-heading">THE SPARK BEHIND MAKE A CHANGE YOUTH</h2>
+          <h2 class="journey-heading">The spark behind Make A Change Youth</h2>
           <p>Whenever I ask any teen, "Hey, what have you planned or what is your goal to change?" but every time I always hear, "I'll figure it out when I'm 21." So I asked myself, "Can we only be adults to even think about making a change in our society?" That was my awakening to start this initiative to empower teenagers to transform their visionary ideas into impactful projects. By sharing diverse youth voices from around the world and cultivating a supportive community of changemakers, we are providing the platform for the next generation to lead today and not tomorrow.</p>
           <p>M.A.C.Y. was born from the conviction that young people shouldn't have to wait for permission to be heard. We decided to bridge that gap, providing the platform, resources, and community that every young changemaker needs to act now and lead with confidence.</p>
-          <a href="#cta" class="btn btn-primary">BECOME A CHANGEMAKER</a>
+          <a href="#cta" class="btn btn-primary">Become a changemaker</a>
         </div>
-        <div class="journey-image">
-          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=450&fit=crop" alt="Youth group collaborating at a table" loading="lazy" width="600" height="450">
+        <div class="journey-image" data-reveal style="--reveal-delay:120ms">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=750&fit=crop" alt="Youth group collaborating at a table" loading="lazy" width="600" height="750">
+          <span class="journey-caption">Changemakers, in their own words</span>
         </div>
       </div>
     </section>
 
     <!-- LATEST STORIES -->
     <section class="stories">
-      <div class="stories-inner container">
-        <div class="stories-info">
-          <span class="section-label">The Blog</span>
-          <h2 class="stories-heading">LATEST STORIES</h2>
-          <p>Empowering narratives and resources designed to spark positive change in your community.</p>
-          <a href="blog.html" class="btn btn-outline">View All Stories</a>
+      <div class="container">
+        <div class="stories-head" data-reveal>
+          <div>
+            <span class="section-label">The Blog</span>
+            <h2 class="stories-heading">Latest stories</h2>
+            <p>Empowering narratives and resources designed to spark positive change in your community.</p>
+          </div>
+          <a href="blog.html" class="btn btn-outline">View all stories</a>
         </div>
         <div class="stories-cards">
-          <a href="blog/teens-step-in-action.html" class="story-card">
+          <a href="blog/teens-step-in-action.html" class="story-card" data-reveal>
             <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=300&h=300&fit=crop" alt="Youth speaking at community event" loading="lazy" width="300" height="300">
+              <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=500&h=334&fit=crop" alt="Youth speaking at community event" loading="lazy" width="500" height="334">
             </div>
-            <h3>Steps to Initiating Real Community Change</h3>
-            <time>JANUARY 15, 2026</time>
-            <span class="read-more">Read More</span>
+            <div class="story-card-body">
+              <time>January 15, 2026</time>
+              <h3>Steps to Initiating Real Community Change</h3>
+              <span class="read-more">Read more</span>
+            </div>
           </a>
-          <a href="blog/inspiring-youth-activism.html" class="story-card">
+          <a href="blog/inspiring-youth-activism.html" class="story-card" data-reveal style="--reveal-delay:100ms">
             <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=300&h=300&fit=crop" alt="Teen leader in classroom" loading="lazy" width="300" height="300">
+              <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=500&h=334&fit=crop" alt="Teen leader in classroom" loading="lazy" width="500" height="334">
             </div>
-            <h3>Understanding Your Power as a Teen Leader</h3>
-            <time>FEBRUARY 02, 2026</time>
-            <span class="read-more">Read More</span>
+            <div class="story-card-body">
+              <time>February 02, 2026</time>
+              <h3>Understanding Your Power as a Teen Leader</h3>
+              <span class="read-more">Read more</span>
+            </div>
           </a>
-          <a href="blog/empowering-teens-community.html" class="story-card">
+          <a href="blog/empowering-teens-community.html" class="story-card" data-reveal style="--reveal-delay:200ms">
             <div class="story-card-img">
-              <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=300&h=300&fit=crop" alt="Youth volunteers working together" loading="lazy" width="300" height="300">
+              <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&h=334&fit=crop" alt="Youth volunteers working together" loading="lazy" width="500" height="334">
             </div>
-            <h3>Grassroots Organizing in the Digital Era</h3>
-            <time>MARCH 10, 2026</time>
-            <span class="read-more">Read More</span>
+            <div class="story-card-body">
+              <time>March 10, 2026</time>
+              <h3>Grassroots Organizing in the Digital Era</h3>
+              <span class="read-more">Read more</span>
+            </div>
           </a>
         </div>
       </div>
@@ -101,63 +131,50 @@
     <!-- MARQUEE 1 -->
     <div class="marquee marquee--lime" aria-hidden="true">
       <div class="marquee-track">
-        <span class="marquee-content">LEAD &bull; REWRITE THE STORY &bull; COMMUNITY FIRST &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; REWRITE THE STORY &bull; COMMUNITY FIRST &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; REWRITE THE STORY &bull; COMMUNITY FIRST &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; REWRITE THE STORY &bull; COMMUNITY FIRST &bull; MAKE A CHANGE &bull;&nbsp;</span>
+        <span class="marquee-content">Lead <span class="star">&#10033;</span> Rewrite the story <span class="star">&#10033;</span> Community first <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Lead <span class="star">&#10033;</span> Rewrite the story <span class="star">&#10033;</span> Community first <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Lead <span class="star">&#10033;</span> Rewrite the story <span class="star">&#10033;</span> Community first <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Lead <span class="star">&#10033;</span> Rewrite the story <span class="star">&#10033;</span> Community first <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
       </div>
     </div>
 
     <!-- EMPOWER YOUR COMMUNITY -->
     <section class="empower">
       <div class="empower-inner">
-        <div class="empower-text">
-          <h2 class="empower-heading">Empower Your Community</h2>
+        <div class="empower-text" data-reveal>
+          <span class="section-label">The Toolkit</span>
+          <h2 class="empower-heading">Empower your community</h2>
           <p>Explore our curated toolkit of resources designed to help the youth of today become the leaders of tomorrow. From activism guides to leadership workshops, we provide the fuel for your fire to spark positive change.</p>
         </div>
-        <div class="empower-resources">
+        <div class="empower-resources" data-reveal style="--reveal-delay:120ms">
           <ul class="resource-list">
-            <li>
-              <img class="resource-icon" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=80&h=80&fit=crop" alt="Books" width="80" height="80">
-              <span>Community Organizing Toolkit</span>
-            </li>
-            <li>
-              <img class="resource-icon" src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=80&h=80&fit=crop" alt="Documents" width="80" height="80">
-              <span>Advocacy &amp; Lobbying 101</span>
-            </li>
-            <li>
-              <img class="resource-icon" src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=80&h=80&fit=crop" alt="Digital campaign" width="80" height="80">
-              <span>Digital Campaigning Guide</span>
-            </li>
-            <li>
-              <img class="resource-icon" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=80&h=80&fit=crop" alt="Workshop" width="80" height="80">
-              <span>Youth Leadership Workshops</span>
-            </li>
-            <li>
-              <img class="resource-icon" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=80&h=80&fit=crop" alt="Planning notes" width="80" height="80">
-              <span>Sustainable Project Planning</span>
-            </li>
+            <li><span>Community Organizing Toolkit</span></li>
+            <li><span>Advocacy &amp; Lobbying 101</span></li>
+            <li><span>Digital Campaigning Guide</span></li>
+            <li><span>Youth Leadership Workshops</span></li>
+            <li><span>Sustainable Project Planning</span></li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- MARQUEE 2 -->
-    <div class="marquee marquee--mint" aria-hidden="true">
+    <div class="marquee marquee--forest" aria-hidden="true">
       <div class="marquee-track">
-        <span class="marquee-content">LEAD &bull; EMPOWER &bull; TAKE ACTION &bull; JOIN THE MOVEMENT &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; EMPOWER &bull; TAKE ACTION &bull; JOIN THE MOVEMENT &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; EMPOWER &bull; TAKE ACTION &bull; JOIN THE MOVEMENT &bull; MAKE A CHANGE &bull;&nbsp;</span>
-        <span class="marquee-content">LEAD &bull; EMPOWER &bull; TAKE ACTION &bull; JOIN THE MOVEMENT &bull; MAKE A CHANGE &bull;&nbsp;</span>
+        <span class="marquee-content">Empower <span class="star">&#10033;</span> Take action <span class="star">&#10033;</span> Join the movement <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Empower <span class="star">&#10033;</span> Take action <span class="star">&#10033;</span> Join the movement <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Empower <span class="star">&#10033;</span> Take action <span class="star">&#10033;</span> Join the movement <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
+        <span class="marquee-content">Empower <span class="star">&#10033;</span> Take action <span class="star">&#10033;</span> Join the movement <span class="star">&#10033;</span> Make a change <span class="star">&#10033;</span>&nbsp;</span>
       </div>
     </div>
 
     <!-- CTA -->
     <section class="cta" id="cta">
-      <div class="cta-inner container">
-        <h2 class="cta-heading">Ready to Lead the Change?</h2>
+      <div class="cta-inner container" data-reveal>
+        <span class="section-label">Join Us</span>
+        <h2 class="cta-heading">Ready to lead <em>the change?</em></h2>
         <p>The power of transformation lies in our collective action. Discover resources, connect with fellow activists, and find your unique way to impact your community.</p>
-        <a href="groups.html" class="btn btn-primary">JOIN THE MOVEMENT</a>
+        <a href="groups.html" class="btn">Join the movement</a>
       </div>
     </section>
 
@@ -173,8 +190,9 @@
             <img src="https://images.unsplash.com/photo-1591848478625-de43268e6fb8?w=400&h=600&fit=crop" alt="Youth holding Our Future sign" loading="lazy" width="400" height="600">
             <span class="impact-label">02&ensp;Policy Workshops</span>
           </div>
-          <div class="impact-info">
-            <h2 class="impact-heading">Impact in Every Action</h2>
+          <div class="impact-info" data-reveal>
+            <span class="section-label">The Gallery</span>
+            <h2 class="impact-heading">Impact in every action</h2>
             <p>Glimpses into the positive changes our youth leaders are making across the country. From urban gardens to digital campaigns, we are rewriting the future.</p>
           </div>
           <div class="impact-item impact-item--3">
