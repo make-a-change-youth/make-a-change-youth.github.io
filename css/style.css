@@ -1,5 +1,5 @@
 /* =================================================================
-   MACY · Make A Change Youth
+   Path2Create · Path2Create
    Shared design system — bold editorial, modern, youth-led
    ================================================================= */
 
@@ -358,6 +358,12 @@ h6 {
   line-height: 1;
 }
 
+.logo-img {
+  display: block;
+  height: 54px;
+  width: auto;
+}
+
 .logo-name {
   font-family: var(--font-display);
   font-size: 1.7rem;
@@ -541,7 +547,7 @@ h6 {
 
 .site-footer .logo-name {
   color: var(--cream);
-  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
   letter-spacing: 0.04em;
   line-height: 0.9;
 }

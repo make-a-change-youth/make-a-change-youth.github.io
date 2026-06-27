@@ -307,9 +307,9 @@ function setLikedState(btn, liked) {
 // Update document title + social meta tags to the current post
 // (helps the browser tab and JS-aware crawlers; classic social scrapers see the static defaults)
 function setMeta(post) {
-  document.title = `${post.title} | MACY`;
+  document.title = `${post.title} | Path2Create`;
   const url = window.location.href;
-  const desc = (post.excerpt || '').trim() || 'A story from Make A Change Youth.';
+  const desc = (post.excerpt || '').trim() || 'A story from Path2Create.';
   const set = (sel, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute('content', val); };
   set('meta[name="description"]', desc);
   set('meta[property="og:title"]', post.title);

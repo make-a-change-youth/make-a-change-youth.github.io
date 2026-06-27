@@ -1,4 +1,4 @@
-# Make A Change Youth (MACY)
+# Path2Create
 
 Static site (HTML/CSS/JS) + Firebase (Auth, Firestore). Live: <https://make-a-change-youth.github.io/>
 

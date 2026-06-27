@@ -16,7 +16,7 @@ const DEFAULT_GROUPS = [
   },
   {
     name: 'Teen Bloggers Connect',
-    description: 'For young writers and contributors of M.A.C.Y to swap blog tips, brainstorm new topics, and support each other’s creative journeys. A place to grow your voice and improve your posts.',
+    description: 'For young writers and contributors of Path2Create to swap blog tips, brainstorm new topics, and support each other’s creative journeys. A place to grow your voice and improve your posts.',
     coverImage: 'https://static.wixstatic.com/media/64b673_f6b8f32d91d9426bb81c65e3f4a7f5b9~mv2.png'
   },
   {
@@ -25,7 +25,7 @@ const DEFAULT_GROUPS = [
     coverImage: 'https://static.wixstatic.com/media/64b673_8047b21ee02e4cceac3363fc3e4d6973~mv2.png'
   },
   {
-    name: 'Make A Change Youth Group',
+    name: 'Path2Create Group',
     description: '',
     coverImage: 'https://static.wixstatic.com/media/1cd9b7_fa5dc5086eab48c2bf0f5df91358187a~mv2.jpeg'
   }
